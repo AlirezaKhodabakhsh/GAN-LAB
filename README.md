@@ -1,1 +1,1 @@
-# gan-lab
+# Generative Adversarial Network Lab
