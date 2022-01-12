@@ -1,8 +1,25 @@
 # DCGAN
 
 # Generator
+You may notice that instead of passing in the image **dimension**(e.g 784 in mnist dataset), you will pass the number of image 
+**channels** to the generator.
+because with DCGAN, you use convolutions which don’t depend on the **number of pixels (size)** on an image, just **input channels** and 
+**number of filters(convolution)** are important.
+
+**NOTE:**  
+> in Basic GANS, we used `nn.Linear` submodules. for these GANS be important JUST number of input/output pixels (dimensions).
+
+**Summary**  
+> Basic GANs    :   `nn.Linear(Dim_in, Dim_out)` (Dim_in : number of input nodes    Dim_out : number of output nodes)
+> DCGANs        :   `nn.Conv2d(C_in, C_out)`     (C_in   : number of input channels C_out   : number of convolution filters)
+
+**NOTE:**  
+write about increase number of nodes in every layer for basic gans. but in DCGANs diminish number of channels in every layer.
+but size of image increase every layer (deconvolution).
 
 # Discriminator
+as same as generator, we focus on number of channels in every layer. but size image diminish every layer and number of channels
+increase every layer.
 
 # Noise
 
