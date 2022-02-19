@@ -1,6 +1,27 @@
 **Sources:**  
 - [ ] https://jonathan-hui.medium.com/gan-gan-series-2d279f906e7b
 
+**Content Table:** 
+- [BCE](#bce)
+- [WGAN](#wgan)
+  - [Discriminator Loss](#discriminator-loss)
+  - [Generator Loss](#generator-loss)
+  - [Hyperparameter](#hyperparameter)
+  - [Training (Learning)](#training-learning)
+  - [Visualization](#visualization)
+- [WGAN-GP](#wgan-gp)
+    - [epsilon](#epsilon)
+    - [Gradient of Discriminator with respect to desired data](#gradient-of-discriminator-with-respect-to-desired-data)
+    - [Gradient Penalty given gradient](#gradient-penalty-given-gradient)
+    - [Discriminator Loss](#discriminator-loss)
+    - [Generator Loss](#generator-loss)
+    - [Hyperparameter](#hyperparameter)
+    - [Training (Learning)](#training-learning)
+    - [Visualization](#visualization)
+    - [Results](#results)
+    - [Save Model](#save-model)
+- [NOTE](#note)
+
 # BCE
 ```python
 def get_loss_dis(gen, dis,
@@ -290,7 +311,44 @@ for epoch in range(n_epochs):
 ## Visualization
 as same as WGAN
 
-# NOTE:
+## Results
+### Epoch 01
+![](./figs/wgan-gb-fake-epoch-01.png)  
+![](./figs/wgan-gb-losses-epoch-01.png)
+
+### Epoch 02
+![](./figs/wgan-gb-fake-epoch-02.png)  
+![](./figs/wgan-gb-losses-epoch-02.png)
+
+### Epoch 50
+![](./figs/wgan-gb-fake-epoch-50.png)  
+![](./figs/wgan-gb-losses-epoch-50.png)
+
+### Epoch 100
+![](./figs/wgan-gb-fake-epoch-100.png)  
+![](./figs/wgan-gb-losses-epoch-100.png)
+
+## Save Model
+**WGAN-GP-Epoch-100.pt** put in Repository.
+
+```python
+def save_model(gen, dis, epoch, cur_step, generator_losses, critic_losses, root, mode = None):
+    # directory system in colab and pc is different.
+    if mode == 'colab':
+        filename = root + f'/model_epoch_{epoch}.pt'
+    else:
+        filename = root + f'\model_epoch_{epoch}.pt'
+
+    torch.save({'epoch' : epoch,
+              'model_dis_state_dict' : dis.state_dict(),
+              'model_gen_state_dict' : gen.state_dict(),
+              'cur_step' : cur_step,
+              'generator_losses' : generator_losses,
+              'critic_losses' : critic_losses},
+              filename)
+```
+
+# NOTE
 1. Use `Detach` in section that it is not important that require_grad of tensor be existed (True/False)
 2. Be careful about **Line 5,6** Algorithm 1 in original paper (these are different).
 3. BE careful about Line 7 (**We draw a red circle on these**)
